@@ -2,6 +2,7 @@
 #define MUSICPLAYER_H
 
 #include <QMainWindow>
+#include <QSettings>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -16,9 +17,11 @@ class MusicPlayer : public QMainWindow
 public:
     MusicPlayer(QWidget *parent = nullptr);
     ~MusicPlayer();
+    QStringList getAllAudioFilePath();
 
 private:
     Ui::MusicPlayer *ui;
+    QSettings m_settings;
 private slots:
     void on_pbFolder_clicked();
 };

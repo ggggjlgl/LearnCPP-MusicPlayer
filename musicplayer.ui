@@ -6,22 +6,26 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>340</width>
-    <height>587</height>
+    <width>352</width>
+    <height>358</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MusicPlayer</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QProgressBar {
-    border: 2px solid grey;
-    border-radius: 5px;
-    text-align: center;
+   <string notr="true">QListWidget {
+    background: transparent;  /* 继承父组件背景 */
+    font-size: 12px;         /* 增大字体 */
+    outline: 0;              /* 移除焦点虚线框 */
 }
-QProgressBar::chunk {
-    background-color: #05B8CC;
-    width: 10px;
+QListWidget::item {
+    height: 20px;            /* 设置行高 */
+    border: none;            /* 移除边框 */
+}
+QListWidget::item:selected {
+    background: #3498DB;      /* 选中项背景色 */
+    color: white;             /* 选中项文字颜色 */
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -40,14 +44,26 @@ QProgressBar::chunk {
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>318</width>
-             <height>451</height>
+             <width>330</width>
+             <height>216</height>
             </rect>
            </property>
            <attribute name="label">
             <string>全部</string>
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout_5">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
             <item>
              <layout class="QVBoxLayout" name="verticalLayout_4">
               <item>
@@ -62,12 +78,12 @@ QProgressBar::chunk {
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>318</width>
-             <height>451</height>
+             <width>330</width>
+             <height>216</height>
             </rect>
            </property>
            <attribute name="label">
-            <string>喜欢</string>
+            <string>手动播放排行</string>
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout_7">
             <item>
@@ -93,21 +109,12 @@ QProgressBar::chunk {
          </widget>
         </item>
         <item>
-         <widget class="QProgressBar" name="progressBar">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>0</height>
-           </size>
+         <widget class="QSlider" name="hsTime">
+          <property name="tracking">
+           <bool>true</bool>
           </property>
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>16</height>
-           </size>
-          </property>
-          <property name="value">
-           <number>0</number>
+          <property name="orientation">
+           <enum>Qt::Orientation::Horizontal</enum>
           </property>
          </widget>
         </item>

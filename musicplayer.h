@@ -24,6 +24,8 @@ public:
     void loadRank();
     void saveRank();
     void showRank();
+    void playSong(bool rankFlag);
+    void playNextPrev(bool rankFlag, int change=1);
 
 private:
     Ui::MusicPlayer *ui;
@@ -31,11 +33,19 @@ private:
     QMediaPlayer* m_player;
     QAudioOutput* m_audioOutput;
     QFileInfoList m_allAudioList;
+    QFileInfoList m_curSongs;
     QMap<QString, int> m_songPlayCount;
+    int m_curIndex;
+    QListWidget *m_curListWidget;
 private slots:
     void on_pbFolder_clicked();
-    void onAudioItemDoubleClicked(QListWidgetItem*);
+    void on_pbNext_clicked();
+    void on_pbPrev_clicked();
+    void on_pbPlay_clicked();
+    void onAudioItemDoubleClicked(QListWidgetItem* item, QListWidget *curListWidget);
     void updateTimeDisplay();
-    void onSliderMoved(int value);
+    void onSliderMoved();
+    void onSongEnd(QMediaPlayer::MediaStatus status);
+    void closeEvent(QCloseEvent *event);
 };
 #endif // MUSICPLAYER_H

@@ -10,22 +10,34 @@
     <height>358</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <pointsize>10</pointsize>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>MusicPlayer</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QListWidget {
-    background: transparent;  /* 继承父组件背景 */
-    font-size: 12px;         /* 增大字体 */
-    outline: 0;              /* 移除焦点虚线框 */
-}
-QListWidget::item {
-    height: 20px;            /* 设置行高 */
-    border: none;            /* 移除边框 */
+    background-color: transparent;
+    padding: 4px;
+    outline: 0;
+    font-family: &quot;Microsoft YaHei&quot;;
+    font-size: 12pt;
 }
 QListWidget::item:selected {
-    background: #3498DB;      /* 选中项背景色 */
-    color: white;             /* 选中项文字颜色 */
+    background-color: #4a90e2; /* 蓝色选中背景 */
+    color: white;
+    border-radius: 6px;
+    font-weight: bold;
+}
+QPushButton {
+	background-color: transparent;
+	border: none;
+}
+QPushButton:hover {
+	background-color: white;
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -36,6 +48,11 @@ QListWidget::item:selected {
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
          <widget class="QToolBox" name="toolBox">
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
           <property name="currentIndex">
            <number>0</number>
           </property>
@@ -45,7 +62,7 @@ QListWidget::item:selected {
              <x>0</x>
              <y>0</y>
              <width>330</width>
-             <height>216</height>
+             <height>210</height>
             </rect>
            </property>
            <attribute name="label">
@@ -79,13 +96,25 @@ QListWidget::item:selected {
              <x>0</x>
              <y>0</y>
              <width>330</width>
-             <height>216</height>
+             <height>210</height>
             </rect>
            </property>
            <attribute name="label">
             <string>手动播放排行</string>
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout_7">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
             <item>
              <layout class="QVBoxLayout" name="verticalLayout_6">
               <item>
@@ -103,6 +132,11 @@ QListWidget::item:selected {
        <layout class="QHBoxLayout" name="horizontalLayout_3">
         <item>
          <widget class="QLabel" name="lbStartTIme">
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string>00:00:00</string>
           </property>
@@ -120,6 +154,11 @@ QListWidget::item:selected {
         </item>
         <item>
          <widget class="QLabel" name="lbTotalTIme">
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string>00:00:00</string>
           </property>
@@ -131,6 +170,11 @@ QListWidget::item:selected {
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
          <widget class="QPushButton" name="pbFolder">
+          <property name="font">
+           <font>
+            <pointsize>16</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string>📁</string>
           </property>
@@ -138,6 +182,11 @@ QListWidget::item:selected {
         </item>
         <item>
          <widget class="QPushButton" name="pbPrev">
+          <property name="font">
+           <font>
+            <pointsize>16</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string>⏮️</string>
           </property>
@@ -145,6 +194,11 @@ QListWidget::item:selected {
         </item>
         <item>
          <widget class="QPushButton" name="pbPlay">
+          <property name="font">
+           <font>
+            <pointsize>16</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string>▶️</string>
           </property>
@@ -152,6 +206,11 @@ QListWidget::item:selected {
         </item>
         <item>
          <widget class="QPushButton" name="pbNext">
+          <property name="font">
+           <font>
+            <pointsize>16</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string>⏭️</string>
           </property>

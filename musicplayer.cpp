@@ -6,20 +6,27 @@
 #include <QAudioOutput>
 #include "musicplayer.h"
 #include "./ui_musicplayer.h"
+#include <QDebug>
+
 
 MusicPlayer::MusicPlayer(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MusicPlayer), m_settings("settings.ini", QSettings::IniFormat), m_curIndex(0)
+    , ui(new Ui::MusicPlayer),
+    m_settings("settings.ini", QSettings::IniFormat),
+    m_player(new QMediaPlayer(this)),
+    m_audioOutput(new QAudioOutput(this)),
+    m_songPlayCount(),
+    m_curIndex(0),
+    m_volume(m_settings.value("volume", "0.2").toFloat())
 {
     setWindowIcon(style()->standardIcon(QStyle::SP_MediaPlay));
     ui->setupUi(this);
+    setUpCustomWidget();
     m_curListWidget = ui->lwAll;
-    m_player = new QMediaPlayer(this);
-    m_audioOutput = new QAudioOutput(this);
     m_player->setAudioOutput(m_audioOutput);
-    m_audioOutput->setVolume(0.2);
-    loadAllAudioFilePath(m_settings.value("lastFolderPath", QDir().homePath()).toString());
-    loadRank();
+    m_audioOutput->setVolume(m_volume);
+    loadAll(m_settings.value("lastFolderPath", QDir().homePath()).toString());
+    showRank();
     connect(ui->lwAll, &QListWidget::itemDoubleClicked, this, [this](QListWidgetItem *item){
         onAudioItemDoubleClicked(item, ui->lwAll);
     });
@@ -36,11 +43,27 @@ MusicPlayer::MusicPlayer(QWidget *parent)
         }
     });
     connect(m_player, &QMediaPlayer::mediaStatusChanged, this, &MusicPlayer::onSongEnd);
+    connect(pbVolume, &VolumeControl::volumeChanged, this, &MusicPlayer::setVolume);
 }
 
 MusicPlayer::~MusicPlayer()
 {
     delete ui;
+}
+void MusicPlayer::setUpCustomWidget() {
+    QFont font1;
+    font1.setPointSize(16);
+    pbVolume = new VolumeControl(int(m_volume * 100), ui->centralwidget);
+    pbVolume->setFont(font1);
+    ui->horizontalLayout_2->addWidget(pbVolume);
+}
+void MusicPlayer::setVolume(int value) {
+    m_volume = value / 100.0;
+    m_audioOutput->setVolume(m_volume);
+}
+void MusicPlayer::closeEvent(QCloseEvent *event) {
+    m_settings.setValue("volume", m_volume);
+    event->accept();
 }
 void MusicPlayer::playNextPrev(bool rankFlag, int change) {
     if (m_curIndex + change < m_curSongs.count()) {
@@ -52,10 +75,6 @@ void MusicPlayer::onSongEnd(QMediaPlayer::MediaStatus status) {
     if (status == QMediaPlayer::EndOfMedia) {
         playNextPrev(false);
     }
-}
-void MusicPlayer::closeEvent(QCloseEvent *event) {
-    m_settings.sync();
-    event->accept();
 }
 void MusicPlayer::on_pbPlay_clicked() {
     if (m_curListWidget == ui->lwAll) {
@@ -88,7 +107,7 @@ void MusicPlayer::on_pbPlay_clicked() {
 void MusicPlayer::on_pbFolder_clicked() {
     QString folderPath = QFileDialog::getExistingDirectory(nullptr, "选择文件夹", "");
     if (!folderPath.isEmpty()) {
-        loadAllAudioFilePath(folderPath);
+        loadAll(folderPath);
     }
 }
 void MusicPlayer::on_pbNext_clicked() {
@@ -115,12 +134,12 @@ void MusicPlayer::saveRank() {
     }
     m_settings.endGroup();
 }
-void MusicPlayer::loadAllAudioFilePath(QString folderPath) {
+void MusicPlayer::loadAll(QString folderPath) {
     m_settings.setValue("lastFolderPath", folderPath);
     ui->lwAll->clear();
     QDir dir(folderPath);
     QStringList filters = {"*.mp3", "*.flac"};
-    this->m_allAudioList = dir.entryInfoList(filters, QDir::Files);
+    m_allAudioList = dir.entryInfoList(filters, QDir::Files);
     foreach (const QFileInfo& fileInfo, m_allAudioList) {
         QListWidgetItem* item = new QListWidgetItem(fileInfo.fileName(), ui->lwAll);
         item->setData(Qt::UserRole, fileInfo.absoluteFilePath());

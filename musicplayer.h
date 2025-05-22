@@ -6,6 +6,7 @@
 #include <QListWidgetItem>
 #include <QtMultimedia/QMediaPlayer>
 #include <QFileInfo>
+#include "components.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -20,12 +21,13 @@ class MusicPlayer : public QMainWindow
 public:
     MusicPlayer(QWidget *parent = nullptr);
     ~MusicPlayer();
-    void loadAllAudioFilePath(QString folderPath);
+    void loadAll(QString folderPath);
     void loadRank();
     void saveRank();
     void showRank();
     void playSong(bool rankFlag);
     void playNextPrev(bool rankFlag, int change=1);
+    void setUpCustomWidget();
 
 private:
     Ui::MusicPlayer *ui;
@@ -36,7 +38,9 @@ private:
     QFileInfoList m_curSongs;
     QMap<QString, int> m_songPlayCount;
     int m_curIndex;
-    QListWidget *m_curListWidget;
+    QListWidget* m_curListWidget;
+    float m_volume;
+    VolumeControl* pbVolume;
 private slots:
     void on_pbFolder_clicked();
     void on_pbNext_clicked();
@@ -47,5 +51,6 @@ private slots:
     void onSliderMoved();
     void onSongEnd(QMediaPlayer::MediaStatus status);
     void closeEvent(QCloseEvent *event);
+    void setVolume(int value);
 };
 #endif // MUSICPLAYER_H

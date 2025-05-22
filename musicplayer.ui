@@ -54,7 +54,7 @@ QPushButton:hover {
            </font>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="page">
            <property name="geometry">
@@ -100,7 +100,7 @@ QPushButton:hover {
             </rect>
            </property>
            <attribute name="label">
-            <string>手动播放排行</string>
+            <string>手动播放TOP10</string>
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout_7">
             <property name="leftMargin">
